@@ -1,0 +1,4 @@
+Design:
+The marbles could be represented by colors. Such as red, green, and blue.
+The user could input a desired amount of marbles for each type of marble.
+Marbles could be removed from the bag when the user exceeds a certain limit.
