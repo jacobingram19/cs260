@@ -1,0 +1,155 @@
+//bag_of_marbles.cpp
+//Name: Jacob Ingram
+//Student ID: x00505201
+//Date Complete: 4/8/24
+//This program is the driver file.
+
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+// removes marbles from the bag if the bag limit is exceeded
+int reduce_marble_count(int red, int green, int blue, int total) {
+    int red_check;
+    int green_check;
+    int blue_check;
+    int new_red;
+    int new_green;
+    int new_blue;
+    int difference;
+    int new_total;
+
+    difference = total - 100;
+
+    if (red>difference) {
+        new_red = red - difference;
+        new_green = green;
+        new_blue = blue;
+    } else if (green>difference) {
+        new_green = green - difference;
+        new_red = red;
+        new_blue = blue;
+    } else {
+        new_blue = blue - difference;
+        new_green = green;
+        new_red = red;
+    }
+
+    cout << "In your bag there are " << new_red << " red marbles; " << new_green << " green marbles; and " << new_blue << " blue marbles.";
+
+    new_total = new_red + new_green + new_blue;
+
+    return new_total;
+}
+
+// ensures that the users input for an individual marble does not exceed the bag limit
+int marble_editor(int marble, int total) {
+    int new_marble;
+    int difference;
+    int new_total;
+
+    difference = marble - 100;
+
+    if (marble > 100) {
+        new_marble = marble - difference;
+    } else {
+        new_marble = marble;
+    }
+
+    new_total = total + new_marble;
+    difference = new_total - 100;
+
+    if (new_total > 100) {
+        new_marble = new_marble - difference;
+    } else {
+        ;
+    }
+
+    return new_marble;
+}
+
+// this function leads the user through the process of putting marbles into the bag
+// user interface
+void marble_bag_editor() { // 'void' voids the necessity for a return in the function
+    int red_marble_count=0;
+    int green_marble_count=0;
+    int blue_marble_count=0;
+    int total_count=0;
+
+    cout << "You have a bag that can hold up to 100 red, green, and blue marbles.\nThe marbles will fall out of the bag if you exceed the limit.\n";
+
+    cout << "How many red marbles would you like in your bag? ";
+    cin >> red_marble_count;
+    red_marble_count = marble_editor(red_marble_count, total_count);
+
+    cout << "How many green marbles would you like in your bag? ";
+    total_count = red_marble_count;
+    cin >> green_marble_count;
+    green_marble_count = marble_editor(green_marble_count, total_count);
+
+    cout << "How many blue marbles would you like in your bag? ";
+    total_count = red_marble_count + green_marble_count;
+    cin >> blue_marble_count;
+    blue_marble_count = marble_editor(blue_marble_count, total_count);
+
+    total_count = red_marble_count + green_marble_count + blue_marble_count;
+
+    if (total_count > 100) {
+        reduce_marble_count(red_marble_count, green_marble_count, blue_marble_count, total_count);
+    } else {
+        cout << "In your bag there are " << red_marble_count << " red marbles; " << green_marble_count << " green marbles; and " << blue_marble_count << " blue marbles.";
+    }
+}
+
+// tests that the bag limit is never exceeded
+// 3 random integers are inputted for the red, green, and blue marbles
+bool test() {
+    int max_num = 150;
+    srand(time(0)); // random seed for rand
+    int red_input = rand() % max_num;
+    int green_input = rand() % max_num;
+    int blue_input = rand() % max_num;
+    int total_count=0;
+    int red_count;
+    int green_count;
+    int blue_count;
+
+    red_count = marble_editor(red_input, total_count);
+
+    total_count = red_count;
+    green_count = marble_editor(green_input, total_count);
+
+    total_count = red_count + green_count;
+    blue_count = marble_editor(blue_input, total_count);
+
+    total_count = red_count + green_count + blue_count;
+
+    cout << "\n\n-------TESTING BAG LIMIT------\n";
+
+    if (total_count > 100) {
+        total_count = reduce_marble_count(red_count, green_count, blue_count, total_count);
+        if (total_count > 100) {
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        cout << "In your bag there are " << red_count << " red marbles; " << green_count << " green marbles; and " << blue_count << " blue marbles.";
+        return true;
+    }
+}
+
+int main() {
+
+marble_bag_editor();
+
+bool check;
+check = test();
+if (check = true) {
+    cout << "\nPass";
+} else {
+    cout << "\nError";
+}
+
+}
