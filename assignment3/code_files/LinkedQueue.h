@@ -31,7 +31,7 @@ class LinkedQueue {
         }
 
         // dequeue
-        // need to change heads values to the next node thus dissolving the current head
+        // attempting to change heads values to the second nodes values
         int dequeue() {
             if (head != nullptr){
                 if (head->next != nullptr){
