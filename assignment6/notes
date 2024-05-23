@@ -1,0 +1,1 @@
+I probably should have made several functions private. Like "leaf_check", "one_child_check", and "get_parent_address". The user would not need to access these in order to use "insert" or "remove".
